@@ -31,6 +31,9 @@ dependencies {
 	// Jasypt (설정값 암호화용)
     implementation "com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.3"
     
+    // 챗GPT 연동
+    implementation 'io.github.flashvayne:chatgpt-spring-boot-starter:1.0.4'
+    
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 	annotationProcessor 'org.projectlombok:lombok'
