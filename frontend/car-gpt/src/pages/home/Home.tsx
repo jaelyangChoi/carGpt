@@ -6,29 +6,34 @@
 import React from "react";
 import { Container, Grid } from "@mui/material";
 import logoText from "assets/logo_text.png";
+import Button from "components/common/Button";
 
 export default function Home() {
   return (
-    <Container id="container">
-      <Grid
-        container
-        justifyContent="center"
-        alignItems="center"
-        textAlign="center"
-      >
+    <div>
+      <Container id="container">
         <Grid
-          item
-          // xs={12}
-          sx={{
-            matginBottom: "5vh",
-          }}
+          container
+          justifyContent="center"
+          alignItems="center"
+          textAlign="center"
         >
-          <img src={logoText} width="70%" />
+          <Grid
+            item
+            // xs={12}
+            sx={{
+              matginBottom: "5vh",
+            }}
+          >
+            <img src={logoText} width="70%" />
+          </Grid>
+          <Grid item xs={12} sx={{ marginTop: "5vh" }}>
+            <Button width="30%" bgcolor="#00287A" fontcolor="#ffffff">
+              시작하기
+            </Button>
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          메인 페이지
-        </Grid>
-      </Grid>
-    </Container>
+      </Container>
+    </div>
   );
 }
