@@ -8,6 +8,10 @@ import org.springframework.context.annotation.Configuration;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 
+/**
+ * 2023.10.27 JHW
+ * 데이터 암복호화용 Jasypt 설정
+ */
 @EnableEncryptableProperties
 @Configuration
 class JasyptConfig {

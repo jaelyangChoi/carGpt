@@ -5,6 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 
 // 나중에 롬복 외부 설치해야함. 스프링에서 해주는건 동작 안됨.
+/**
+ * 2023.10.28 JHW
+ * ChatGPT 질문 Dto
+ */
 @Data
 @AllArgsConstructor 
 @Builder

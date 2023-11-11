@@ -1,17 +1,11 @@
-package com.example.cargpt.comm.dto;
+package com.example.cargpt.chatgpt.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
 
 /**
  * 2023.11.11 JHW
- * 고객개인정보 Dto
+ * ChatGPT 질문용 고객 개인정보 Dto
  */
-@Data
-@AllArgsConstructor 
-@Builder
-public class CrmcPsnCsmrIDto {
+public class UserForRecDto {
 	
 	String CsmrMgmtNo;				/*고객관리번호*/
 	String SexCd;   				/*성별코드*/
@@ -39,8 +33,7 @@ public class CrmcPsnCsmrIDto {
 	
 	
 	
-	
-	public CrmcPsnCsmrIDto() {
+	public UserForRecDto() {
 		super();
 	}
 	
@@ -184,5 +177,4 @@ public class CrmcPsnCsmrIDto {
 		AltrDtm = altrDtm;
 	}
 	
-
 }
