@@ -10,7 +10,9 @@ import com.example.cargpt.customer.service.MemberService;
 
 import java.util.List;
 
-@Controller
+@Slf4j
+@RestController
+@RequestMapping("/customers")
 public class CustomerController {
     private final CustomerService customerService;
 
@@ -24,11 +26,13 @@ public class CustomerController {
      * @param
      * @return json
      */
-    @GetMapping("/customers")
-    public String list(Model model) {
+    @GetMapping
+    public List<Customer> list() {
+        log.debug("@GetMapping(\"/customers\")");
         List<Customer> customers = customerService.findCustomers();
-        model.addAttribute("customers", customers);
-        return "/customers/customerList";
+        log.debug("customers : {}", constomers.toString());
+
+        return customers;
     }
 
     /**
@@ -36,36 +40,31 @@ public class CustomerController {
      * @param model
      * @return
      */
-    @GetMapping("/customers/{customerId}")
-    public String list(Model model) {
-        Customer customer = customerService.findOne(customerId);
+    @GetMapping("/{csmrMgmtNo}")
+    public String list(@PathVariable String csmrMgmtNo) {
+        log.debug("@GetMapping(\"/customers/{csmrMgmtNo}\")");
+        Customer customer = customerService.findOne(csmrMgmtNo);
+        log.debug("customer : {}", constomer.toString());
 
-        return "/customers/customerList";
+        return customer;
     }
 
-
-    /**
-     * 고객 등록 화면
-     * @param form
-     * @return
-     */
-    @GetMapping("/customer/new")
-    public String createForm() {
-        return "customers/createCustomerForm";
-    }
 
     /**
      * 고객 등록
      * @param form
      * @return
      */
-    @PostMapping("/customer/")
-    public String create(CustomerForm form) {
+    /*
+    @PostMapping("/new")
+    public String create(@ModelAttribute CustomerForm form, RedirectAttributes redirectAttributes) {
         Customer customer = new Customer();
         customer.setName(form.getName());
 
         customerService.join(customer);
-        return "redirect:/";
+        redirectAttributes.addAttribute("csmrMgmtNo", customer.getCsmrMgmtNo());
+        redirectAttributes.addAttribute("status", true); //남은 속성값은 쿼리파라미터 형식으로 들어감
+        return "redirect:/customers/{csmrMgmtNo}"; //redirectAttribute의 값을 넣어줌. url 인코딩 문제 해결.
     }
-
+    */
 }

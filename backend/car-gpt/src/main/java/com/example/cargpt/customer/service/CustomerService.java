@@ -29,8 +29,8 @@ public class CustomerService {
      * @param memberId
      * @return
      */
-    public Optional<Customer> findOne(Long customerId) {
-        return customerRepository.findById(customerId);
+    public Optional<Customer> findOne(String csmrMgmtNo) {
+        return customerRepository.findByCsmrMgmtNo(csmrMgmtNo);
     }
 
 
@@ -39,10 +39,10 @@ public class CustomerService {
      * @param customer
      * @return
      */
-    public Long join(Customer customer) {
+    public String join(Customer customer) {
         validateDuplicateMember(customer); //같은 이름이 있는 중복 회원x
         customerRepository.save(customer);
-        return customer.getId();
+        return customer.getCsmrMgmtNo();
     }
 
     /**
@@ -50,9 +50,9 @@ public class CustomerService {
      * @param customer
      */
     private void validateDuplicateMember(Customer customer) {
-        customerRepository.findByName(customer.getName())
+        customerRepository.findByCsmrMgmtNo(customer.getCsmrMgmtNo())
                 .ifPresent(m -> {
-                    throw new IllegalStateException("이미 존재하는 이름입니다.");
+                    throw new IllegalStateException("이미 존재하는 고객관리번호입니다.");
                 });
     }
 }
