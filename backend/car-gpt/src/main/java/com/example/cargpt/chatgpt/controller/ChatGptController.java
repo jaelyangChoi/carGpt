@@ -27,6 +27,8 @@ public class ChatGptController {
 		userForRecDto.setRdnmAdr("서울특별시");
 		userForRecDto.setCsmrTymdNo("19960423");
 		userForRecDto.setSexCd("1");
+		userForRecDto.setMariYn("1");
+		userForRecDto.setCsmrChtSpsn("2");
 
 		return myChatGptService.makePrompt(userForRecDto);
 	}

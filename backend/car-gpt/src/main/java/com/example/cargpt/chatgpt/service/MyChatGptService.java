@@ -29,7 +29,10 @@ public class MyChatGptService {
 
 		String rdnmAdr = userInfo.getRdnmAdr(); // 주소
 		String csmrTymdNo = userInfo.getCsmrTymdNo(); // 생년월일
+		String mariYn = userInfo.getMariYn();	// 결혼여부
+		String csmrChtSpsn = userInfo.getCsmrChtSpsn();	// 자녀수
 		String sexCd = userInfo.getSexCd(); // 성별
+		
 
 		// 주소 세팅
 		if (StringUtils.hasText(rdnmAdr)) {
@@ -48,6 +51,25 @@ public class MyChatGptService {
 			// 만 나이
 			int age = (current - birth);
 			sb.append(Integer.toString(age) + "세의 ");
+		}
+		
+		// 결혼 세팅
+		if(StringUtils.hasText(mariYn)) {
+			if(mariYn.equals("1"))
+				sb.append("기혼의 ");
+			else
+				sb.append("미혼의 ");
+		}
+		
+		// 자녀 수 세팅
+		if(StringUtils.hasText(csmrChtSpsn)) {
+			Integer cnt = Integer.parseInt(csmrChtSpsn);
+			if(cnt>=2) {
+				sb.append("다자녀를 가진 ");
+			} else {
+				sb.append("자녀 1명을 가진 ");
+			}
+			
 		}
 
 		// 성별 세팅
