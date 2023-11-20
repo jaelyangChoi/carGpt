@@ -4,7 +4,19 @@
 @since 2023.11.13
 */
 import React, { useEffect, useMemo } from "react";
-import { Container, Grid } from "@mui/material";
+//Material UI Imports
+import {
+  Container,
+  Grid,
+  useTheme,
+  darken,
+  lighten,
+  Box,
+  Button,
+  ListItemIcon,
+  MenuItem,
+  Typography,
+} from "@mui/material";
 import logoText from "assets/logo_text.png";
 
 //MRT Imports
@@ -15,17 +27,9 @@ import {
 } from "material-react-table";
 
 //Material UI Imports
-import {
-  Box,
-  Button,
-  ListItemIcon,
-  MenuItem,
-  Typography,
-  lighten,
-} from "@mui/material";
 
 //Icons Imports
-import { AccountCircle, Send } from "@mui/icons-material";
+import { AccountCircle, Send, Edit, MenuOutlined } from "@mui/icons-material";
 
 //Date Picker Imports - these should just be in your Context Provider
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -105,35 +109,46 @@ const data: Data[] = [
     SexCd: "여",
   },
   {
-    CsmrMgmtNo: "A2023123123123",
+    CsmrMgmtNo: "A2023456456456",
     EmlAdr: "ha.Cho@hyundai-autoever.com",
-    CsmrTymdNo: "1997-01-17",
+    CsmrTymdNo: "1997-11-22",
     SexCd: "여",
   },
 ];
 
 const Example = () => {
+  const theme = useTheme();
+
+  //light or dark green
+  const baseBackgroundColor =
+    theme.palette.mode === "dark" ? "#ffffff" : "#ffffff";
+
   const columns = useMemo<MRT_ColumnDef<Data>[]>(
     () => [
       {
         accessorKey: "CsmrMgmtNo", //access nested data with dot notation
-        header: "CsmrMgmtNo",
-        size: 150,
+        header: "고객관리번호",
+        size: 80,
+        muiTableHeadCellProps: { sx: { color: "#00287A", fontSize: "1.7vh" } }, //custom props
+        Cell: ({ renderedCellValue }) => <strong>{renderedCellValue}</strong>, //optional custom cell render
       },
       {
         accessorKey: "EmlAdr",
-        header: "EmlAdr",
-        size: 150,
+        header: "이메일",
+        size: 200,
+        muiTableHeadCellProps: { sx: { color: "#00287A", fontSize: "1.7vh" } }, //custom props
       },
       {
         accessorKey: "CsmrTymdNo", //normal accessorKey
-        header: "CsmrTymdNo",
-        size: 200,
+        header: "생년월일",
+        size: 100,
+        muiTableHeadCellProps: { sx: { color: "#00287A", fontSize: "1.7vh" } }, //custom props
       },
       {
         accessorKey: "SexCd",
-        header: "SexCd",
-        size: 150,
+        header: "성별",
+        size: 80,
+        muiTableHeadCellProps: { sx: { color: "#00287A", fontSize: "1.7vh" } }, //custom props
       },
     ],
     []
@@ -141,143 +156,62 @@ const Example = () => {
 
   const table = useMaterialReactTable({
     columns,
-    data, //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
-    // enableColumnFilterModes: true,
-    // enableColumnOrdering: true,
-    // enableGrouping: true,
-    // enableColumnPinning: true,
-    // enableFacetedValues: true,
-    // enableRowActions: true,
-    // enableRowSelection: true,
-    // initialState: { showColumnFilters: true, showGlobalFilter: true },
-    // paginationDisplayMode: "pages",
-    // positionToolbarAlertBanner: "bottom",
-    // muiSearchTextFieldProps: {
-    //   size: "small",
-    //   variant: "outlined",
-    // },
-    // muiPaginationProps: {
-    //   color: "secondary",
-    //   rowsPerPageOptions: [10, 20, 30],
-    //   shape: "rounded",
-    //   variant: "outlined",
-    // },
-    // renderDetailPanel: ({ row }) => (
-    //   <Box
-    //     sx={{
-    //       display: "flex",
-    //       justifyContent: "space-around",
-    //       alignItems: "center",
-    //     }}
-    //   >
-    //     {/* <img
-    //       alt="avatar"
-    //       height={200}
-    //       src={row.original.avatar}
-    //       loading="lazy"
-    //       style={{ borderRadius: "50%" }}
-    //     /> */}
-    //     <Box sx={{ textAlign: "center" }}>
-    //       <Typography variant="h4">Signature Catch Phrase:</Typography>
-    //       {/* <Typography variant="h1">
-    //         &quot;{row.original.signatureCatchPhrase}&quot;
-    //       </Typography> */}
-    //     </Box>
-    //   </Box>
-    // ),
-    // renderRowActionMenuItems: ({ closeMenu }) => [
-    //   <MenuItem
-    //     key={0}
-    //     onClick={() => {
-    //       // View profile logic...
-    //       closeMenu();
-    //     }}
-    //     sx={{ m: 0 }}
-    //   >
-    //     <ListItemIcon>
-    //       <AccountCircle />
-    //     </ListItemIcon>
-    //     View Profile
-    //   </MenuItem>,
-    //   <MenuItem
-    //     key={1}
-    //     onClick={() => {
-    //       // Send email logic...
-    //       closeMenu();
-    //     }}
-    //     sx={{ m: 0 }}
-    //   >
-    //     <ListItemIcon>
-    //       <Send />
-    //     </ListItemIcon>
-    //     Send Email
-    //   </MenuItem>,
-    // ],
-    // renderTopToolbar: ({ table }) => {
-    //   const handleDeactivate = () => {
-    //     table.getSelectedRowModel().flatRows.map((row) => {
-    //       alert("deactivating " + row.getValue("name"));
-    //     });
-    //   };
-
-    //   const handleActivate = () => {
-    //     table.getSelectedRowModel().flatRows.map((row) => {
-    //       alert("activating " + row.getValue("name"));
-    //     });
-    //   };
-
-    //   const handleContact = () => {
-    //     table.getSelectedRowModel().flatRows.map((row) => {
-    //       alert("contact " + row.getValue("name"));
-    //     });
-    //   };
-
-    //   return (
-    //     <Box
-    //       sx={(theme) => ({
-    //         backgroundColor: lighten(theme.palette.background.default, 0.05),
-    //         display: "flex",
-    //         gap: "0.5rem",
-    //         p: "8px",
-    //         justifyContent: "space-between",
-    //       })}
-    //     >
-    //       <Box sx={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
-    //         {/* import MRT sub-components */}
-    //         {/* <MRT_GlobalFilterTextField table={table} /> */}
-    //         {/* <MRT_ToggleFiltersButton table={table} /> */}
-    //       </Box>
-    //       <Box>
-    //         <Box sx={{ display: "flex", gap: "0.5rem" }}>
-    //           <Button
-    //             color="error"
-    //             disabled={!table.getIsSomeRowsSelected()}
-    //             onClick={handleDeactivate}
-    //             variant="contained"
-    //           >
-    //             Deactivate
-    //           </Button>
-    //           <Button
-    //             color="success"
-    //             disabled={!table.getIsSomeRowsSelected()}
-    //             onClick={handleActivate}
-    //             variant="contained"
-    //           >
-    //             Activate
-    //           </Button>
-    //           <Button
-    //             color="info"
-    //             disabled={!table.getIsSomeRowsSelected()}
-    //             onClick={handleContact}
-    //             variant="contained"
-    //           >
-    //             Contact
-    //           </Button>
-    //         </Box>
-    //       </Box>
-    //     </Box>
-    //   );
-    // },
+    data,
+    muiTablePaperProps: {
+      elevation: 0, //change the mui box shadow
+      //customize paper styles
+      sx: {
+        borderRadius: "0",
+      },
+    },
+    muiTableBodyProps: {
+      sx: (theme) => ({
+        '& tr:nth-of-type(odd):not([data-selected="true"]):not([data-pinned="true"]) > td':
+          {
+            backgroundColor: darken(baseBackgroundColor, 0.1),
+          },
+        '& tr:nth-of-type(odd):not([data-selected="true"]):not([data-pinned="true"]):hover > td':
+          {
+            backgroundColor: darken(baseBackgroundColor, 0.2),
+          },
+        '& tr:nth-of-type(even):not([data-selected="true"]):not([data-pinned="true"]) > td':
+          {
+            backgroundColor: lighten(baseBackgroundColor, 0.1),
+          },
+        '& tr:nth-of-type(even):not([data-selected="true"]):not([data-pinned="true"]):hover > td':
+          {
+            backgroundColor: darken(baseBackgroundColor, 0.2),
+          },
+      }),
+    },
+    mrtTheme: (theme) => ({
+      baseBackgroundColor: baseBackgroundColor,
+      draggingBorderColor: theme.palette.secondary.main,
+    }),
+    enableRowActions: true,
+    enableColumnActions: false,
+    displayColumnDefOptions: {
+      "mrt-row-actions": {
+        header: "",
+        size: 30,
+      },
+    },
+    positionActionsColumn: "last",
+    renderRowActions: ({ row }) => (
+      <Box>
+        <IconButton onClick={() => console.log(row.original.CsmrMgmtNo)}>
+          <MailIcon />
+        </IconButton>
+      </Box>
+    ),
+    renderRowActionMenuItems: ({ row }) => [
+      <MenuItem key="email" onClick={() => console.info("email")}>
+        추천메일 발송
+      </MenuItem>,
+      <MenuItem key="detail" onClick={() => console.info("detail")}>
+        회원 상세정보
+      </MenuItem>,
+    ],
   });
 
   return <MaterialReactTable table={table} />;
@@ -300,38 +234,16 @@ export default function Detail() {
     setPage(0);
   };
 
-
-  // * 백엔드 로컬 돌리기
-
-  // 1. 폴더 1개에서 car-gpt랑 git 연동하기 (git pull origin master)
-  // 위 작업 후에 폴더에 backend, frontend, .gitigone 지금 깃 화면에서 보이는 그대로 폴더에 있음
-  
-  // 2. STS4 켜기
-  // - import 프로젝트 > General > Projects from Folder or Archive / Exsisting Gardle Project
-  // - 우측 하단 초록색 바 refresh 기다리기
-  // - 프로젝트 우클릭 > gradle > update하기 (의존성 설치)
-  
-  
-  // 3. 프로젝트 컨트롤 + F11로 실행하기
-  // => 그러면 콘솔 창에 SPRING START 찍힘
-  
-  
-  // 4. 
-  // axios.get("localhost:8080/custoer/show");
-  // => 백엔드가 아마 8080 고정일 것이고(따로 변경안했음)
-  // 프론트엔드도 8080이면 프론트엔드를 포트번호 변경해서 돌리기
-  // => 위의 URI는 컨트롤러에서 확인하기 (localhost:8080/ 까지는 고정)
-
   // 전체 회원 목록 조회
-  // async function getCustomers() {
-  //   const response = await http.get(`/customers`);
-  //   console.log("sleij");
-  //   console.log(response.data);
-  // }
+  async function getCustomers() {
+    const response = await http.get(`/customers`);
+    console.log("회원목록 받아오기");
+    console.log(response.data);
+  }
 
-  // useEffect(() => {
-  //   getCustomers();
-  // });
+  useEffect(() => {
+    getCustomers();
+  });
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -343,48 +255,61 @@ export default function Detail() {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
-      <CssBaseline />
-      {/* 드로어 */}
-      <Drawer
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          "& .MuiDrawer-paper": {
+    <div id="container">
+      <Box sx={{ display: "flex" }}>
+        <CssBaseline />
+        {/* 드로어 */}
+        <Drawer
+          sx={{
             width: drawerWidth,
-            boxSizing: "border-box",
-          },
-        }}
-        variant="permanent"
-        anchor="left"
-      >
-        <img src={logoText} style={{ width: "80%", margin: "2vh" }} />
-        <Divider />
-        {/* 드로어 리스트 */}
-        <List>
-          {["회원목록"].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
-      <Box
-        component="main"
-        sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
-      >
-        <Typography paragraph>회원 목록</Typography>
-        {/* 회원 목록 테이블 */}
-        //App.tsx or AppProviders file
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <Example />
-        </LocalizationProvider>
+            flexShrink: 0,
+            "& .MuiDrawer-paper": {
+              width: drawerWidth,
+              boxSizing: "border-box",
+            },
+          }}
+          variant="permanent"
+          anchor="left"
+        >
+          <img src={logoText} style={{ width: "70%", margin: "3vh" }} />
+          <Divider />
+          {/* 드로어 리스트 */}
+          <List>
+            {["회원 목록"].map((text, index) => (
+              <ListItem key={text} disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    {index % 2 === 0 ? (
+                      <MenuOutlined color="primary" />
+                    ) : (
+                      <MailIcon />
+                    )}
+                  </ListItemIcon>
+                  <ListItemText primary={text} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        </Drawer>
+        <Box
+          component="main"
+          sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
+        >
+          <Typography
+            variant="h5"
+            color="secondary"
+            sx={{
+              marginBottom: 2,
+            }}
+          >
+            회원 목록
+          </Typography>
+          {/* 회원 목록 테이블 */}
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <Example />
+          </LocalizationProvider>
+        </Box>
       </Box>
-    </Box>
+    </div>
   );
 }

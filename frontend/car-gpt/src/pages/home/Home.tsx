@@ -4,42 +4,52 @@
 @since 2023.11.05
 */
 import React from "react";
-import { Container, Grid } from "@mui/material";
+import { Container, Grid, Typography } from "@mui/material";
 import logoText from "assets/logo_text.png";
 import Button from "components/common/Button";
 import { useNavigate } from "react-router-dom";
 
 export default function Home() {
-
   const navigator = useNavigate();
 
   return (
-    <div>
-      <Container id="container">
-        <Grid
-          container
-          justifyContent="center"
-          alignItems="center"
-          textAlign="center"
-        >
+    <div id="container">
+      <Grid container spacing={30}>
+        <Grid item xs={12}></Grid>
+        <Grid item xs={12}>
           <Grid
-            item
-            // xs={12}
+            container
             sx={{
-              matginBottom: "5vh",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              textAlign: "center",
             }}
           >
-            <img src={logoText} width="70%" />
-          </Grid>
-          <Grid item xs={12} sx={{ marginTop: "5vh" }}>
-            <Button width="30%" bgcolor="#00287A" fontcolor="#ffffff" onClick={() => {
-        navigator(`/detail`);
-      }}>
-              시작하기
-            </Button>
+            <Grid item>
+              <img src={logoText} width="70%" />
+            </Grid>
+            <Grid item xs={12} sx={{ marginTop: "1vh" }}>
+              <Typography variant="h5" color="primary">
+                ChatGPT 기반 차량 추천 서비스
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sx={{ marginTop: "4vh" }}>
+              <Button
+                width="350px"
+                bgcolor="#00287A"
+                fontcolor="#ffffff"
+                onClick={() => {
+                  navigator(`/detail`);
+                }}
+              >
+                시작하기
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
-      </Container>
+        <Grid item xs={12}></Grid>
+      </Grid>
     </div>
   );
 }
