@@ -1,14 +1,15 @@
 package com.example.cargpt.customer.controller;
 
+
+import com.example.cargpt.customer.domain.Customer;
+import com.example.cargpt.customer.domain.CustomerInfo;
+import com.example.cargpt.customer.service.CustomerService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import com.example.cargpt.customer.domain.Member;
-import com.example.cargpt.customer.service.MemberService;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 @Slf4j
 @RestController
@@ -27,24 +28,24 @@ public class CustomerController {
      * @return json
      */
     @GetMapping
-    public List<Customer> list() {
+    public List<Customer> CustomerList() {
         log.debug("@GetMapping(\"/customers\")");
         List<Customer> customers = customerService.findCustomers();
-        log.debug("customers : {}", constomers.toString());
+        log.debug("customers size : {}", customers.size());
 
         return customers;
     }
 
     /**
      * 고객 정보 조회
-     * @param model
+     * @param csmrMgmtNo
      * @return
      */
     @GetMapping("/{csmrMgmtNo}")
-    public String list(@PathVariable String csmrMgmtNo) {
+    public CustomerInfo CustomerInfo(@PathVariable String csmrMgmtNo) {
         log.debug("@GetMapping(\"/customers/{csmrMgmtNo}\")");
-        Customer customer = customerService.findOne(csmrMgmtNo);
-        log.debug("customer : {}", constomer.toString());
+        CustomerInfo customer = customerService.findOne(csmrMgmtNo).get();
+        log.debug("customer : {}", customer.toString());
 
         return customer;
     }
@@ -68,3 +69,4 @@ public class CustomerController {
     }
     */
 }
+
