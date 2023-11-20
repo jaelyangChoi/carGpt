@@ -300,6 +300,28 @@ export default function Detail() {
     setPage(0);
   };
 
+
+  // * 백엔드 로컬 돌리기
+
+  // 1. 폴더 1개에서 car-gpt랑 git 연동하기 (git pull origin master)
+  // 위 작업 후에 폴더에 backend, frontend, .gitigone 지금 깃 화면에서 보이는 그대로 폴더에 있음
+  
+  // 2. STS4 켜기
+  // - import 프로젝트 > General > Projects from Folder or Archive / Exsisting Gardle Project
+  // - 우측 하단 초록색 바 refresh 기다리기
+  // - 프로젝트 우클릭 > gradle > update하기 (의존성 설치)
+  
+  
+  // 3. 프로젝트 컨트롤 + F11로 실행하기
+  // => 그러면 콘솔 창에 SPRING START 찍힘
+  
+  
+  // 4. 
+  // axios.get("localhost:8080/custoer/show");
+  // => 백엔드가 아마 8080 고정일 것이고(따로 변경안했음)
+  // 프론트엔드도 8080이면 프론트엔드를 포트번호 변경해서 돌리기
+  // => 위의 URI는 컨트롤러에서 확인하기 (localhost:8080/ 까지는 고정)
+
   // 전체 회원 목록 조회
   // async function getCustomers() {
   //   const response = await http.get(`/customers`);
