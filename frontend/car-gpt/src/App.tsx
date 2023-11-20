@@ -5,15 +5,15 @@ import Router from "./Router";
 import { createTheme, ThemeProvider } from "@mui/material";
 
 const theme = createTheme({
-  // typography: {
-  //   fontFamily: 현대
-  // }
+  typography: {
+    fontFamily: "'HDharmony', sans-serif",
+  },
   palette: {
     primary: {
       main: "#00287A",
     },
     secondary: {
-      main: "#00287A",
+      main: "#8093BC",
     },
   },
 });
