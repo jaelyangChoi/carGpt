@@ -3,7 +3,7 @@
 @author 조혜안
 @since 2023.11.13
 */
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState, useRef } from "react";
 //Material UI Imports
 import {
   Container,
@@ -61,23 +61,26 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { http } from "api/http";
 
 interface Column {
-  id: "CsmrMgmtNo" | "EmlAdr" | "CsmrTymdNo" | "SexCd";
+  // id: "csmrNm" | "CsmrMgmtNo" | "EmlAdr" | "CsmrTymdNo" | "SexCd";
+  id: "csmrNm" | "CsmrMgmtNo" | "EmlAdr" | "CsmrTymdNo";
   label: string;
   minWidth?: number;
   align?: "right";
   format?: (value: number) => string;
 }
 
-const columns: readonly Column[] = [
-  { id: "CsmrMgmtNo", label: "고객관리번호", minWidth: 100 },
-  { id: "EmlAdr", label: "이메일", minWidth: 100 },
-  { id: "CsmrTymdNo", label: "생년월일", minWidth: 100 },
-  { id: "SexCd", label: "성별", minWidth: 100 },
-];
+// const columns: readonly Column[] = [
+//   { id: "csmrNm", label: "고객명", minWidth: 50 },
+//   { id: "CsmrMgmtNo", label: "고객관리번호", minWidth: 100 },
+//   { id: "EmlAdr", label: "이메일", minWidth: 100 },
+//   { id: "CsmrTymdNo", label: "생년월일", minWidth: 100 },
+//   // { id: "SexCd", label: "성별", minWidth: 100 },
+// ];
 
 type Data = {
+  CsmrNm: string; // 고객명
   CsmrMgmtNo: string; // 고객관리번호
-  SexCd: string; // 성별코드
+  // SexCd: string; // 성별코드
   CsmrTymdNo: string; // 생년월일
   // TelNum: string; // 휴대폰번호
   // TnUsblScnCd: string; // 휴대폰번호 가용여부
@@ -101,20 +104,7 @@ type Data = {
   // AltrDtm: string; // 변경일시
 };
 
-const data: Data[] = [
-  {
-    CsmrMgmtNo: "A2023123123123",
-    EmlAdr: "ha.Cho@hyundai-autoever.com",
-    CsmrTymdNo: "1997-01-17",
-    SexCd: "여",
-  },
-  {
-    CsmrMgmtNo: "A2023456456456",
-    EmlAdr: "ha.Cho@hyundai-autoever.com",
-    CsmrTymdNo: "1997-11-22",
-    SexCd: "여",
-  },
-];
+const data: Data[] = [];
 
 const Example = () => {
   const theme = useTheme();
@@ -126,11 +116,17 @@ const Example = () => {
   const columns = useMemo<MRT_ColumnDef<Data>[]>(
     () => [
       {
+        accessorKey: "CsmrNm", //access nested data with dot notation
+        header: "고객명",
+        size: 80,
+        muiTableHeadCellProps: { sx: { color: "#00287A", fontSize: "1.7vh" } }, //custom props
+        Cell: ({ renderedCellValue }) => <strong>{renderedCellValue}</strong>, //optional custom cell render
+      },
+      {
         accessorKey: "CsmrMgmtNo", //access nested data with dot notation
         header: "고객관리번호",
         size: 80,
         muiTableHeadCellProps: { sx: { color: "#00287A", fontSize: "1.7vh" } }, //custom props
-        Cell: ({ renderedCellValue }) => <strong>{renderedCellValue}</strong>, //optional custom cell render
       },
       {
         accessorKey: "EmlAdr",
@@ -144,12 +140,12 @@ const Example = () => {
         size: 100,
         muiTableHeadCellProps: { sx: { color: "#00287A", fontSize: "1.7vh" } }, //custom props
       },
-      {
-        accessorKey: "SexCd",
-        header: "성별",
-        size: 80,
-        muiTableHeadCellProps: { sx: { color: "#00287A", fontSize: "1.7vh" } }, //custom props
-      },
+      // {
+      //   accessorKey: "SexCd",
+      //   header: "성별",
+      //   size: 80,
+      //   muiTableHeadCellProps: { sx: { color: "#00287A", fontSize: "1.7vh" } }, //custom props
+      // },
     ],
     []
   );
@@ -204,14 +200,14 @@ const Example = () => {
         </IconButton>
       </Box>
     ),
-    renderRowActionMenuItems: ({ row }) => [
-      <MenuItem key="email" onClick={() => console.info("email")}>
-        추천메일 발송
-      </MenuItem>,
-      <MenuItem key="detail" onClick={() => console.info("detail")}>
-        회원 상세정보
-      </MenuItem>,
-    ],
+    // renderRowActionMenuItems: ({ row }) => [
+    //   <MenuItem key="email" onClick={() => console.info("email")}>
+    //     추천메일 발송
+    //   </MenuItem>,
+    //   <MenuItem key="detail" onClick={() => console.info("detail")}>
+    //     회원 상세정보
+    //   </MenuItem>,
+    // ],
   });
 
   return <MaterialReactTable table={table} />;
@@ -234,16 +230,24 @@ export default function Detail() {
     setPage(0);
   };
 
+  const [csmrInfo, setCsmrInfo] = useState([]);
+
   // 전체 회원 목록 조회
   async function getCustomers() {
     const response = await http.get(`/customers`);
     console.log("회원목록 받아오기");
-    console.log(response.data);
+    console.log(response.data[0]);
+    setCsmrInfo(response.data);
   }
 
+  const mounted = useRef(false);
   useEffect(() => {
-    getCustomers();
-  });
+    if (!mounted.current) {
+      mounted.current = true;
+    } else {
+      getCustomers();
+    }
+  }, []);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -291,6 +295,7 @@ export default function Detail() {
             ))}
           </List>
         </Drawer>
+        {/* <div>{csmrInfo[0]}</div> */}
         <Box
           component="main"
           sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
@@ -304,6 +309,7 @@ export default function Detail() {
           >
             회원 목록
           </Typography>
+
           {/* 회원 목록 테이블 */}
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Example />
