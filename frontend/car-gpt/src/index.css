@@ -25,3 +25,22 @@ code {
   font-family: "HDharmony", sans-serif;
   font-size: "2vh";
 }
+
+.container {
+  width: 150px;
+  height: 150px;
+  display: flex;
+  place-content: center;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+}
+
+.item {
+  /* width: 56%; */
+  overflow: visible;
+  stroke: #8093bc;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
