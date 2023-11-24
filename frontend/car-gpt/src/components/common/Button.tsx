@@ -23,6 +23,7 @@ const StyledButton = styled.button<StyledButtonProps>`
     padding: 12px 24px;
     margin: 0;
     cursor: pointer;
+    font-size: 1.7vh;
     // transition: 0.001s background-color ease-in-out;
   }
   &:hover {
