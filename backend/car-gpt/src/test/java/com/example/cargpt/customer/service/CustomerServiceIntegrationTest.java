@@ -13,15 +13,15 @@ import java.util.List;
 @SpringBootTest
 @Transactional
 class CustomerServiceIntegrationTest {
-    @Autowired private CustomerService customerService;
+    @Autowired
+    private CustomerService customerService;
 
 
     @Test
-    void 고객전체조회(){
+    void 고객전체조회() {
         /*
         //given
         Customer customer1 = new Customer();
-        customer1.setCsmrMgmtNo("11112222");
         customer1.setSexCd("1");
         customer1.setCsmrTymdNo("930701");
         customer1.setExrsEeEeno("1186500");
@@ -30,7 +30,6 @@ class CustomerServiceIntegrationTest {
         customerService.join(customer1);
 
         Customer customer2 = new Customer();
-        customer2.setCsmrMgmtNo("11113333");
         customer2.setSexCd("0");
         customer2.setCsmrTymdNo("960701");
         customer2.setExrsEeEeno("E186500");
@@ -42,16 +41,15 @@ class CustomerServiceIntegrationTest {
         List<Customer> customers = customerService.findCustomers();
 
         //then
-        customers.forEach(c->System.out.println(c.getCsmrMgmtNo() + "(" + c.getCsmrNm() + ")"));
-        Assertions.assertThat(customers.size()).isEqualTo(1);
+        customers.forEach(c -> System.out.println(c.getCsmrMgmtNo() + "(" + c.getCsmrNm() + ")"));
+        Assertions.assertThat(customers.size()).isEqualTo(4);
     }
 
     @Test
-    void 고객관리번호로조회(){
+    void 고객관리번호로조회() {
         //given
         /*
         Customer customer1 = new Customer();
-        customer1.setCsmrMgmtNo("11112222");
         customer1.setSexCd("1");
         customer1.setCsmrTymdNo("930701");
         customer1.setExrsEeEeno("1186500");
@@ -60,7 +58,6 @@ class CustomerServiceIntegrationTest {
         String csmrMgmtNo1 = customerService.join(customer1);
 
         Customer customer2 = new Customer();
-        customer2.setCsmrMgmtNo("11113333");
         customer2.setSexCd("0");
         customer2.setCsmrTymdNo("960701");
         customer2.setExrsEeEeno("E186500");
@@ -68,12 +65,12 @@ class CustomerServiceIntegrationTest {
         customer2.setChgrEeno("E186500");
         String csmrMgmtNo2 = customerService.join(customer2);
         */
-        String savedCsmrMgmtNo = "A202311190000001";
+        Long savedCsmrMgmtNo = 3L;
         //when
         CustomerInfo foundCustomer = customerService.findOne(savedCsmrMgmtNo).get();
 
         //then
-        System.out.println(foundCustomer.getCsmrMgmtNo());
+        System.out.println(foundCustomer.getCsmrMgmtNo() + ", " + foundCustomer.getEmlAdr());
         Assertions.assertThat(foundCustomer.getCsmrMgmtNo()).isEqualTo(savedCsmrMgmtNo);
     }
 

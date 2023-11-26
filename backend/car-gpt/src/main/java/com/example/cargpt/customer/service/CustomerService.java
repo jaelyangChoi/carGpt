@@ -34,7 +34,7 @@ public class CustomerService {
      * @param csmrMgmtNo
      * @return
      */
-    public Optional<CustomerInfo> findOne(String csmrMgmtNo) {
+    public Optional<CustomerInfo> findOne(Long csmrMgmtNo) {
         return customerInfoRepository.findByCsmrMgmtNo(csmrMgmtNo);
     }
 
@@ -45,7 +45,7 @@ public class CustomerService {
      * @param customer
      * @return
      */
-    public String join(CustomerInfo customer) {
+    public Long join(CustomerInfo customer) {
         validateDuplicateMember(customer); //같은 이름이 있는 중복 회원x
         customerInfoRepository.save(customer);
         return customer.getCsmrMgmtNo();
