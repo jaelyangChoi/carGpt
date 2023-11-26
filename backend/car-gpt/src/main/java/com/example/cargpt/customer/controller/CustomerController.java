@@ -42,7 +42,7 @@ public class CustomerController {
      * @return
      */
     @GetMapping("/{csmrMgmtNo}")
-    public CustomerInfo CustomerInfo(@PathVariable String csmrMgmtNo) {
+    public CustomerInfo CustomerInfo(@PathVariable Long csmrMgmtNo) {
         log.debug("@GetMapping(\"/customers/{csmrMgmtNo}\")");
         CustomerInfo customer = customerService.findOne(csmrMgmtNo).get();
         log.debug("customer : {}", customer.toString());
