@@ -1,19 +1,16 @@
 /*
-메인 페이지
+시작 페이지
 @author 조혜안
 @since 2023.11.05
 */
-import React from "react";
-import { Container, Grid, Typography } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import logoText from "assets/logo_text2.png";
-import Button from "components/common/Button";
-import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import svg from "./assets/logo_image.svg";
-import styled from "styled-components";
+import { useSetRecoilState } from "recoil";
+import { atomIsLogin } from "recoil/atomIsLogin";
 
-export default function Home() {
-  const navigator = useNavigate();
+export default function Login() {
+  const setIsLogin = useSetRecoilState(atomIsLogin);
 
   const icon = {
     hidden: {
@@ -66,17 +63,14 @@ export default function Home() {
             </motion.svg>
           </Grid>
           <Grid item xs={12} sx={{ textAlign: "center" }}>
-            <img src={logoText} width="250px" />
+            <img src={logoText} width="250px" alt={"logoText"} />
           </Grid>
         </Grid>
         <Grid item xs={12} sx={{ marginTop: "4vh", textAlign: "center" }}>
           <Button
-            width="300px"
-            bgcolor="#00287A"
-            fontcolor="#ffffff"
-            onClick={() => {
-              navigator(`/detail`);
-            }}
+            variant="contained"
+            sx={{ width: "250px" }}
+            onClick={() => setIsLogin(true)}
           >
             시작하기
           </Button>
