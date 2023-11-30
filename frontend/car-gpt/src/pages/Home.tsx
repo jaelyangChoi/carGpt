@@ -33,9 +33,9 @@ export default function Home() {
     <div>
       <Stack>
         <CsmrTable csmrInfoList={csmrInfoList} />
+        <CsmrModal />
+        <MailModal />
       </Stack>
-      {/* <CsmrModal /> */}
-      {/* <MailModal /> */}
     </div>
   );
 }
