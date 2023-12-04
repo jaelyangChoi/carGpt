@@ -4,7 +4,8 @@
 @since 2023.11.05
 */
 import React from "react";
-import { Container, Grid, Typography } from "@mui/material";
+import {useState, useRef, useEffect} from 'react';
+import { Container, Grid, Typography, TextField} from "@mui/material";
 import logoText from "assets/logo_text2.png";
 import Button from "components/common/Button";
 import { useNavigate } from "react-router-dom";
@@ -26,6 +27,36 @@ export default function Home() {
     },
   };
 
+  const inputRef = useRef<HTMLInputElement>();
+  const [id, setId] = useState('E178622');
+  const handleId = (event: any) => {
+    return setId(event.target.value);
+  }
+  const focusInput = useEffect(() => {
+    if(inputRef.current !== undefined){
+      inputRef.current.focus();
+    }
+  })
+  const goDetail = () => {
+    //사번 간단 검증
+    if(id.length != 7) {
+      alert('사번을 확인하세요.');
+      if(inputRef.current !== undefined){
+        inputRef.current.focus();
+      }
+      return;
+    }
+    //입력한 사번을 LocalStorage에 담자.
+    const storedId = localStorage.getItem('id');
+    if(storedId === null){
+      localStorage.setItem('id', id);
+    } else {
+      localStorage.removeItem('id');
+      localStorage.setItem('id', id);
+    }
+    navigator(`/detail`);
+  }
+
   return (
     <Grid container spacing={30}>
       <Grid item xs={12}></Grid>
@@ -44,7 +75,7 @@ export default function Home() {
             item
             xs={12}
             sx={{
-              textAlign: "center",
+              textAlign: "center"
             }}
           >
             <motion.svg
@@ -68,14 +99,18 @@ export default function Home() {
           <Grid item xs={12} sx={{ textAlign: "center" }}>
             <img src={logoText} width="250px" />
           </Grid>
+          <Grid item xs={12} sx={{ marginTop: "5vh", textAlign: "center" }}>
+            <TextField sx={{width: "300px" }} id="outlined-basic" label="사번" variant="outlined" value={id} onChange={handleId} inputRef={inputRef}/>
+          </Grid>
         </Grid>
+        
         <Grid item xs={12} sx={{ marginTop: "4vh", textAlign: "center" }}>
           <Button
             width="300px"
             bgcolor="#00287A"
             fontcolor="#ffffff"
             onClick={() => {
-              navigator(`/detail`);
+              goDetail();
             }}
           >
             시작하기
