@@ -13,11 +13,14 @@ import CsmrInfoType from "types/CsmrInfoType";
 import { http } from "api/http";
 import MailModal from "components/MailModal";
 
+import dummyCsmrInfoList from "../api/dummyCsmrInfo";
+
 export default function Home() {
   const [csmrInfoList, setCsmrInfoList] = useState<CsmrInfoType[]>([]);
 
   // 전체 회원 목록 조회
   async function getCustomers() {
+    setCsmrInfoList(dummyCsmrInfoList());
     const response = await http.get(`/customers`);
     console.log("회원목록 받아오기");
     console.log(response.data);
