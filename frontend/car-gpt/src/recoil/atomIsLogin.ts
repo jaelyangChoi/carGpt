@@ -12,3 +12,10 @@ export const atomIsLogin = atom<boolean>({
   default: false,
   effects_UNSTABLE: [persistAtom],
 });
+
+//2023.12.04 허윤회 로그인 ID 추가
+export const atomLoginId = atom<string>({
+  key: "loginId",
+  default: "E178622",
+  effects_UNSTABLE: [persistAtom],
+})

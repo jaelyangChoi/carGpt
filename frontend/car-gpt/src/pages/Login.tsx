@@ -8,10 +8,11 @@ import { Button, Grid, TextField } from "@mui/material";
 import logoText from "assets/logo_text2.png";
 import { motion } from "framer-motion";
 import { useSetRecoilState } from "recoil";
-import { atomIsLogin } from "recoil/atomIsLogin";
+import { atomIsLogin, atomLoginId } from "recoil/atomIsLogin";
 
 export default function Login() {
   const setIsLogin = useSetRecoilState(atomIsLogin);
+  const setLoginId = useSetRecoilState(atomLoginId);
 
   const icon = {
     hidden: {
@@ -34,7 +35,7 @@ export default function Login() {
       inputRef.current.focus();
     }
   })
-  const goDetail = () => {
+  const doLogin = () => {
     //사번 간단 검증
     if(id.length != 7) {
       alert('사번을 확인하세요.');
@@ -43,15 +44,8 @@ export default function Login() {
       }
       return;
     }
-    //입력한 사번을 LocalStorage에 담자.
-    const storedId = localStorage.getItem('id');
-    if(storedId === null){
-      localStorage.setItem('id', id);
-    } else {
-      localStorage.removeItem('id');
-      localStorage.setItem('id', id);
-    }
-    // navigator(`/detail`);
+    setLoginId(id);
+    setIsLogin(true)
   }
 
   return (
@@ -105,7 +99,7 @@ export default function Login() {
           <Button
             variant="contained"
             sx={{ width: "250px" }}
-            onClick={() => setIsLogin(true)}
+            onClick={() => doLogin()}
           >
             시작하기
           </Button>
