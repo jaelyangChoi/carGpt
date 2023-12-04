@@ -3,14 +3,16 @@
 @author 조혜안
 @since 2023.11.05
 */
-import { Button, Grid } from "@mui/material";
+import {useState, useRef, useEffect} from 'react';
+import { Button, Grid, TextField } from "@mui/material";
 import logoText from "assets/logo_text2.png";
 import { motion } from "framer-motion";
 import { useSetRecoilState } from "recoil";
-import { atomIsLogin } from "recoil/atomIsLogin";
+import { atomIsLogin, atomLoginId } from "recoil/atomIsLogin";
 
 export default function Login() {
   const setIsLogin = useSetRecoilState(atomIsLogin);
+  const setLoginId = useSetRecoilState(atomLoginId);
 
   const icon = {
     hidden: {
@@ -22,6 +24,29 @@ export default function Login() {
       fill: "#8093BC",
     },
   };
+
+  const inputRef = useRef<HTMLInputElement>();
+  const [id, setId] = useState('E178622');
+  const handleId = (event: any) => {
+    return setId(event.target.value);
+  }
+  const focusInput = useEffect(() => {
+    if(inputRef.current !== undefined){
+      inputRef.current.focus();
+    }
+  })
+  const doLogin = () => {
+    //사번 간단 검증
+    if(id.length != 7) {
+      alert('사번을 확인하세요.');
+      if(inputRef.current !== undefined){
+        inputRef.current.focus();
+      }
+      return;
+    }
+    setLoginId(id);
+    setIsLogin(true)
+  }
 
   return (
     <Grid container spacing={30}>
@@ -41,7 +66,7 @@ export default function Login() {
             item
             xs={12}
             sx={{
-              textAlign: "center",
+              textAlign: "center"
             }}
           >
             <motion.svg
@@ -65,12 +90,16 @@ export default function Login() {
           <Grid item xs={12} sx={{ textAlign: "center" }}>
             <img src={logoText} width="250px" alt={"logoText"} />
           </Grid>
+          <Grid item xs={12} sx={{ marginTop: "5vh", textAlign: "center" }}>
+            <TextField sx={{width: "300px" }} id="outlined-basic" label="사번" variant="outlined" value={id} onChange={handleId} inputRef={inputRef}/>
+          </Grid>
         </Grid>
+        
         <Grid item xs={12} sx={{ marginTop: "4vh", textAlign: "center" }}>
           <Button
             variant="contained"
             sx={{ width: "250px" }}
-            onClick={() => setIsLogin(true)}
+            onClick={() => doLogin()}
           >
             시작하기
           </Button>
