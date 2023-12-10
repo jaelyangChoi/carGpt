@@ -37,8 +37,8 @@ export default function CsmrModal() {
 
   async function getCustomer() {
     // const data = dummyCsmrDetailInfoList();
-    // setCsmrDetailInfo(data);
     // console.log(data);
+    // setCsmrDetailInfo(data[0]);
 
     const response = await http.get(`/customers/${csmrMgmtNo}`);
     console.log("회원상세정보 받아오기");
@@ -114,7 +114,9 @@ export default function CsmrModal() {
               </Grid>
               <Grid item xs={12}>
                 <Typography gutterBottom variant="body1">
-                  {csmrDetailInfo?.csmrTymdNo}
+                  {csmrDetailInfo?.csmrTymdNo.substring(0,4)}.
+                  {csmrDetailInfo?.csmrTymdNo.substring(4,6)}.
+                  {csmrDetailInfo?.csmrTymdNo.substring(6,8)}
                 </Typography>
               </Grid>
               <Divider variant="middle" />
@@ -128,12 +130,7 @@ export default function CsmrModal() {
                   {csmrDetailInfo?.telNum}
                 </Typography>
               </Grid>
-            </Grid>
-          </Grid>
-          {/* 구분선 */}
-          <Divider orientation="vertical" flexItem></Divider>
-          <Grid item sx={{ ml: 2 }} xs>
-            <Grid container>
+              <Divider variant="middle" />
               <Grid item xs={12}>
                 <Typography gutterBottom variant="body2" color="primary">
                   주소
@@ -144,7 +141,22 @@ export default function CsmrModal() {
                   {csmrDetailInfo?.rdnmAdr}
                 </Typography>
               </Grid>
-              <Divider variant="middle" />
+            </Grid>
+          </Grid>
+          {/* 구분선 */}
+          <Divider orientation="vertical" flexItem></Divider>
+          <Grid item sx={{ ml: 2 }} xs>
+            <Grid container>
+              <Grid item xs={12}>
+                <Typography gutterBottom variant="body2" color="primary">
+                  직장정보
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography gutterBottom variant="body1">
+                  {csmrDetailInfo?.wkplNm} / {csmrDetailInfo?.poaNm}
+                </Typography>
+              </Grid>
               <Grid item xs={12}>
                 <Typography gutterBottom variant="body2" color="primary">
                   결혼여부
@@ -157,7 +169,23 @@ export default function CsmrModal() {
               </Grid>
               <Grid item xs={12}>
                 <Typography gutterBottom variant="body2" color="primary">
-                  이전차량코드
+                  가족형태
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                {csmrDetailInfo?.famTypCd === "1" ? (
+                  <Typography gutterBottom variant="body1">
+                    4인가족
+                  </Typography>
+                ) : (
+                  <Typography gutterBottom variant="body1">
+                    1인가족
+                  </Typography>
+                )}
+              </Grid>
+              <Grid item xs={12}>
+                <Typography gutterBottom variant="body2" color="primary">
+                  이전CRM차종코드
                 </Typography>
               </Grid>
               <Grid item xs={12}>
@@ -183,12 +211,12 @@ export default function CsmrModal() {
               </Grid>
               <Grid item xs={12}>
                 <Typography gutterBottom variant="body2" color="primary">
-                  차량교체주기(일)
+                  차량교체주기
                 </Typography>
               </Grid>
               <Grid item xs={12}>
                 <Typography gutterBottom variant="body1">
-                  {csmrDetailInfo?.carChngPrd}
+                  {csmrDetailInfo?.carChngPrd}일
                 </Typography>
               </Grid>
             </Grid>
