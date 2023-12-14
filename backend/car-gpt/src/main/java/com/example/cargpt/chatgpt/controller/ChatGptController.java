@@ -28,13 +28,13 @@ public class ChatGptController {
 	 * 
 	 * @param map
 	 * 
-		{
-    	"rdnmAdr" : "서울특별시",
-    	"sexCd" : "1",
-    	"csmrTymdNo" : "19840527",
-    	"mariYn" : "1",
-    	"csmrChtSpsn" : "2"
-		}
+	 * { 
+	 * 	"rdnmAdr" : "서울특별시", 
+	 * 	"sexCd" : "1", 
+	 * 	"csmrTymdNo" : "19840527",
+	 *  "mariYn" : "1",
+	 *  "csmrChtSpsn" : "2" 
+	 * }
 	 * @return
 	 */
 	@PostMapping("/question")
@@ -54,23 +54,17 @@ public class ChatGptController {
 		userForRecDto.setMariYn(mariYn);
 		userForRecDto.setCsmrChtSpsn(csmrChtSpsn);
 
-		return myChatGptService.makePrompt(userForRecDto);
-	}
+		// 고객정보 사용하여 질문 생성
+		String prompt = myChatGptService.makePrompt(userForRecDto);
 
-	/**
-	 * ChatGPT 질문 던지기
-	 * 
-	 * @param chatGptRequestDto
-	 * @return
-	 */
-	@PostMapping("/sendPrompt")
-	public String test(@RequestBody ChatGptRequestDto chatGptRequestDto) {
+		// 챗 GPT에게 질문하기
+		String answer = myChatGptService.getResponse(prompt);
 
-		String prompt = chatGptRequestDto.getPrompt();
+		log.info("질문 : " + prompt);
+		log.info("질문 응답 : " + answer);
+		// : 으로 끊기거나, 이 추천드립니다. , 를 추천드립니다. (파싱해야함)
 
-		System.out.println("질문 : " + prompt);
-
-		return myChatGptService.getResponse(prompt);
+		return answer;
 	}
 
 }
