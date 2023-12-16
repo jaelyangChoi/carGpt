@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -36,7 +35,19 @@ public class EmailController {
         return emailVO;
     }
 
-    public EmailVO makeEmailMessage(String recipient, String subject, String message) {
-        return new EmailVO(recipient, subject, message);
+    @GetMapping("/{csmrMgmtNo}")
+    public EmailVO sendEmail(@PathVariable Long csmrMgmtNo) {
+        log.info("sendSimpleEmail to : {}", csmrMgmtNo);
+        CustomerInfo customerInfo = customerService.findOne(csmrMgmtNo).get();
+        log.info(customerInfo.getEmlAdr());
+        EmailVO emailVO = makeEmailMessage(customerInfo.getEmlAdr(), "[광고] 차량 추천 안내", "차량 추천 내용");
+
+        emailService.sendEmail(emailVO);
+        log.info(emailVO.toString());
+        return emailVO;
+    }
+
+    public EmailVO makeEmailMessage (String recipient, String subject, String message) {
+        return new EmailVO("Hyundai Car Recommend Service <hyundai-car-recommend@gmail.com>", recipient, subject, message);
     }
 }

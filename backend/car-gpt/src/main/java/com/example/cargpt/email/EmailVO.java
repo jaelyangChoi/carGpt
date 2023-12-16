@@ -10,6 +10,7 @@ import lombok.ToString;
 @Builder
 @ToString
 public class EmailVO {
+    private String sender;
     private String recipient;
     private String subject;
     private String message;
