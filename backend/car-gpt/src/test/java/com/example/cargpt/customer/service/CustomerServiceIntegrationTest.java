@@ -67,7 +67,7 @@ class CustomerServiceIntegrationTest {
         */
         Long savedCsmrMgmtNo = 3L;
         //when
-        CustomerInfo foundCustomer = customerService.findOne(savedCsmrMgmtNo).get();
+        CustomerInfo foundCustomer = customerService.findCustomerInfo(savedCsmrMgmtNo).get();
 
         //then
         System.out.println(foundCustomer.getCsmrMgmtNo() + ", " + foundCustomer.getEmlAdr());

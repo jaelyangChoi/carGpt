@@ -2,6 +2,7 @@ package com.example.cargpt.customer.service;
 
 import com.example.cargpt.customer.domain.Customer;
 import com.example.cargpt.customer.repository.CustomerRepository;
+import com.example.cargpt.customer.vo.CustomerInfoVO;
 import org.springframework.transaction.annotation.Transactional;
 import com.example.cargpt.customer.domain.CustomerInfo;
 import com.example.cargpt.customer.repository.CustomerInfoRepository;
@@ -33,8 +34,11 @@ public class CustomerService {
      *
      * @return
      */
-    public Optional<Customer> findCustomer(Long csmrMgmtNo) {
-        return customerRepository.findByCsmrMgmtNo(csmrMgmtNo);
+    public CustomerInfoVO findCustomer(Long csmrMgmtNo) {
+        Customer customer = customerRepository.findByCsmrMgmtNo(csmrMgmtNo).get();
+        CustomerInfo customerDetailInfo = findCustomerInfo(csmrMgmtNo).get();
+
+        return makeCustomerInfoVO(csmrMgmtNo, customer, customerDetailInfo);
     }
 
     /**
@@ -70,5 +74,17 @@ public class CustomerService {
                 .ifPresent(m -> {
                     throw new IllegalStateException("이미 존재하는 고객관리번호입니다.");
                 });
+    }
+
+    private CustomerInfoVO makeCustomerInfoVO(Long csmrMgmtNo, Customer customer, CustomerInfo customerDetailInfo) {
+        CustomerInfoVO customerInfoVO = new CustomerInfoVO();
+        customerInfoVO.setCsmrMgmtNo(csmrMgmtNo);
+        customerInfoVO.setName(customer.getCsmrNm());
+        customerInfoVO.setEmailRcpmYn(customer.getEmlRcpmYN());
+        customerInfoVO.setEmail(customerDetailInfo.getEmlAdr());
+        customerInfoVO.setTel(customerDetailInfo.getTelNum());
+        customerInfoVO.setSex(customerDetailInfo.getSexCd());
+        customerInfoVO.setEmployeeNo(customerDetailInfo.getChgrEeno());
+        return customerInfoVO;
     }
 }

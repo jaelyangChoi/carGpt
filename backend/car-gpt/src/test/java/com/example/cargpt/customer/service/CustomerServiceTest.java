@@ -36,7 +36,7 @@ class CustomerServiceTest {
         Long CsmrMgmtNo = CustomerService.join(customer);
 
         //then
-        CustomerInfo foundCustomer = CustomerService.findOne(CsmrMgmtNo).get();
+        CustomerInfo foundCustomer = CustomerService.findCustomerInfo(CsmrMgmtNo).get();
         assertThat(foundCustomer.getCsmrMgmtNo()).isEqualTo(customer.getCsmrMgmtNo());
     }
 
