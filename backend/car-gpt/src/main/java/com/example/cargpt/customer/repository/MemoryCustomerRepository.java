@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MemoryCustomerRepository implements CustomerRepository{
-    private static Map<String, Customer> store = new HashMap<>();
+    private static Map<Long, Customer> store = new HashMap<>();
 
     @Override
     public List<Customer> findAll() {

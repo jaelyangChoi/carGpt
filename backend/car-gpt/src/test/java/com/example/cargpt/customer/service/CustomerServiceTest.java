@@ -31,10 +31,9 @@ class CustomerServiceTest {
     void 회원가입() {
         //given
         CustomerInfo customer = new CustomerInfo();
-        customer.setCsmrMgmtNo("11112222");
 
         //when
-        String CsmrMgmtNo = CustomerService.join(customer);
+        Long CsmrMgmtNo = CustomerService.join(customer);
 
         //then
         CustomerInfo foundCustomer = CustomerService.findOne(CsmrMgmtNo).get();
