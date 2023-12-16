@@ -13,24 +13,24 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "CAR_MST")
-public class CarInfo {
+@Table(name = "CRMC_REC_CAR_REL")
+public class CrmcRecCarRelInfo {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // DB가 알아서 생성해주는 전략
-	@Column(name = "CAR_ID")
-	String carId; /* 아이디 */
+	@Column(name = "REC_ID")
+	String recId; /* 아이디 */
 
-	@Column(name = "CAR_NM")
-	String carNm; /* 차종 이름 */
+	@Column(name = "CSMR_MGMT_NO")
+	String csmrMgmtNo; /* 고객관리번호 */
 
 	@Column(name = "CRM_VEHL_CD")
 	String crmVehlCd; /* 차종대표코드 */
 
-	@Column(name = "FUEL")
-	String fuel; /* 연로 */
+	@Column(name = "CAR_NM")
+	String carNm; /* 차량 이름 */
 
-	@Column(name = "FUEL_EFFIC")
-	String fuelEffic; /* 연비 (1L당) */
+	@Column(name = "REC_DESC")
+	String recDesc; /* 추천 사유 */
 
 }
