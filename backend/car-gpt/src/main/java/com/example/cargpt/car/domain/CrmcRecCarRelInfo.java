@@ -2,25 +2,21 @@ package com.example.cargpt.car.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Id;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @Entity
+@ToString
 @Table(name = "CRMC_REC_CAR_REL")
 public class CrmcRecCarRelInfo {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY) // DB가 알아서 생성해주는 전략
-	@Column(name = "REC_ID")
-	String recId; /* 아이디 */
-
 	@Column(name = "CSMR_MGMT_NO")
 	String csmrMgmtNo; /* 고객관리번호 */
 
