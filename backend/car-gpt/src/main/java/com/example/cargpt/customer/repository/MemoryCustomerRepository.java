@@ -2,10 +2,7 @@ package com.example.cargpt.customer.repository;
 
 import com.example.cargpt.customer.domain.Customer;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MemoryCustomerRepository implements CustomerRepository{
     private static Map<Long, Customer> store = new HashMap<>();
@@ -13,5 +10,10 @@ public class MemoryCustomerRepository implements CustomerRepository{
     @Override
     public List<Customer> findAll() {
         return new ArrayList<>(store.values());
+    }
+
+    @Override
+    public Optional<Customer> findByCsmrMgmtNo(Long csmrMgmtNo) {
+        return Optional.empty();
     }
 }

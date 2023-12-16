@@ -29,12 +29,21 @@ public class CustomerService {
     }
 
     /**
+     * 고객관리번호로 고객 조회
+     *
+     * @return
+     */
+    public Optional<Customer> findCustomer(Long csmrMgmtNo) {
+        return customerRepository.findByCsmrMgmtNo(csmrMgmtNo);
+    }
+
+    /**
      * 고객 정보 조회
      *
      * @param csmrMgmtNo
      * @return
      */
-    public Optional<CustomerInfo> findOne(Long csmrMgmtNo) {
+    public Optional<CustomerInfo> findCustomerInfo(Long csmrMgmtNo) {
         return customerInfoRepository.findByCsmrMgmtNo(csmrMgmtNo);
     }
 

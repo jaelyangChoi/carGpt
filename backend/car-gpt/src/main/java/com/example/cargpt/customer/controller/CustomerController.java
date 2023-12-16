@@ -28,7 +28,7 @@ public class CustomerController {
      * @return json
      */
     @GetMapping
-    public List<Customer> CustomerList() {
+    public List<Customer> customerList() {
         log.debug("@GetMapping(\"/customers\")");
         List<Customer> customers = customerService.findCustomers();
         log.debug("customers size : {}", customers.size());
@@ -42,9 +42,9 @@ public class CustomerController {
      * @return
      */
     @GetMapping("/{csmrMgmtNo}")
-    public CustomerInfo CustomerInfo(@PathVariable Long csmrMgmtNo) {
+    public CustomerInfo customerInfo(@PathVariable Long csmrMgmtNo) {
         log.debug("@GetMapping(\"/customers/{csmrMgmtNo}\")");
-        CustomerInfo customer = customerService.findOne(csmrMgmtNo).get();
+        CustomerInfo customer = customerService.findCustomerInfo(csmrMgmtNo).get();
         log.debug("customer : {}", customer.toString());
 
         return customer;
