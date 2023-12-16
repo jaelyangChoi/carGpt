@@ -29,6 +29,7 @@ public class ChatGptController {
 	 * @param map
 	 * 
 	 * { 
+	 *  "csmrMgmtNo" : "고객관리번호",
 	 * 	"rdnmAdr" : "서울특별시", 
 	 * 	"sexCd" : "1", 
 	 * 	"csmrTymdNo" : "19840527",
@@ -39,6 +40,7 @@ public class ChatGptController {
 	 */
 	@PostMapping("/question")
 	public String Question(@RequestBody Map<String, String> map) {
+		String csmrMgmtNo = map.get("cmsrMgmtNo");
 		String rdnmAdr = map.get("rdnmAdr");
 		String csmrTymdNo = map.get("csmrTymdNo");
 		String sexCd = map.get("sexCd");
@@ -58,12 +60,20 @@ public class ChatGptController {
 		String prompt = myChatGptService.makePrompt(userForRecDto);
 
 		// 챗 GPT에게 질문하기
-		String answer = myChatGptService.getResponse(prompt);
+//		String answer = myChatGptService.getResponse(prompt);
+		String answer = "Answer: 현대 레이, \r\n"
+				+ "Reason: 현대 레이는 2013년부터 나온 스마트한 성능과 다양한 운전 모드를 제공하는 스포츠 세단으로, 도시 생활에도 적합하며 가족이 없는 단란한 여성에게 적합합니다.";
 
 		log.info("질문 : " + prompt);
 		log.info("질문 응답 : " + answer);
 		// : 으로 끊기거나, 이 추천드립니다. , 를 추천드립니다. (파싱해야함)
-
+		
+		String[] parsedAnswer = myChatGptService.questionParsing(answer);
+		
+		log.info("추천 차종 : " + parsedAnswer[0]);
+		log.info("추천 사유 : " + parsedAnswer[1]);
+		
+		
 		return answer;
 	}
 

@@ -6,14 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.example.cargpt.chatgpt.controller.ChatGptController;
 import com.example.cargpt.chatgpt.dto.UserForRecDto;
 
 import io.github.flashvayne.chatgpt.service.ChatgptService;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 2023.11.11 JHW
  */
 @Service
+@Slf4j
 public class MyChatGptService {
 
 	@Autowired
@@ -33,7 +36,7 @@ public class MyChatGptService {
 		String csmrChtSpsn = userInfo.getCsmrChtSpsn(); // 자녀수
 		String sexCd = userInfo.getSexCd(); // 성별
 
-		sb.append("Please recommend 1 Hyundai Motor Company in Korean to");
+		sb.append("Please recommend 1 Hyundai Motor Company Car that has been released since 2013 in Korean to ");
 		// 주소 세팅
 
 		// 나이 세팅
@@ -87,9 +90,32 @@ public class MyChatGptService {
 
 		}
 
-		sb.append("and give me a short reason.");
+		sb.append("and the answer should be in Korean as follows: { \"answer\":\" \" , \"reason\":\" \"}");
 
 		return sb.toString();
+	}
+
+	/**
+	 * 챗GPT 응답에 대해 파싱하기
+	 * 
+	 * @param gptAnswer
+	 * @return
+	 */
+	public String[] questionParsing(String gptAnswer) {
+		String[] firstParsedAnswer = gptAnswer.split(":");
+
+		for (int i = 0; i < firstParsedAnswer.length; i++)
+			log.info("Chat GPT Answer that parsed[" + i + "] : " + firstParsedAnswer[i]);
+
+		String car = firstParsedAnswer[1].split(",")[0];
+		String reason = firstParsedAnswer[2];
+
+		String[] parsedResult = new String[2];
+
+		parsedResult[0] = car;
+		parsedResult[1] = reason;
+
+		return parsedResult;
 	}
 
 	/*
