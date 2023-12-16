@@ -38,7 +38,7 @@ public class ChatGptController {
 	 */
 	@PostMapping("/question")
 	public CrmcRecCarRelInfo Question(@RequestBody Map<String, String> map) {
-		String csmrMgmtNo = map.get("csmrMgmtNo");
+		Long csmrMgmtNo = Long.parseLong(map.get("csmrMgmtNo"));
 		String rdnmAdr = map.get("rdnmAdr");
 		String csmrTymdNo = map.get("csmrTymdNo");
 		String sexCd = map.get("sexCd");

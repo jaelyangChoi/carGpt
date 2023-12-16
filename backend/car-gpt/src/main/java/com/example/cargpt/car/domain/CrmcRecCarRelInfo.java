@@ -18,7 +18,7 @@ public class CrmcRecCarRelInfo {
 
 	@Id
 	@Column(name = "CSMR_MGMT_NO")
-	String csmrMgmtNo; /* 고객관리번호 */
+	Long csmrMgmtNo; /* 고객관리번호 */
 
 	@Column(name = "CRM_VEHL_CD")
 	String crmVehlCd; /* 차종대표코드 */

@@ -61,7 +61,7 @@ public class CarController {
 	 * @return
 	 */
 	@GetMapping("/crmcRecCarRelInfo/{csmrMgmtNo}")
-	public CrmcRecCarRelInfo getCrmcRecCarRelInfo(@PathVariable String csmrMgmtNo) {
+	public CrmcRecCarRelInfo getCrmcRecCarRelInfo(@PathVariable Long csmrMgmtNo) {
 		log.info("GET (\"/crmcRecCarRelInfo/{csmrMgmtNo}\")");
 		log.info("ID : " + csmrMgmtNo);
 		CrmcRecCarRelInfo crmcRecCarRelInfo = carService.getCrmcRecCarRelInfo(csmrMgmtNo);
@@ -76,11 +76,11 @@ public class CarController {
 	 * @return
 	 */
 	@PostMapping("/crmcRecCarRelInfo/save")
-	public CrmcRecCarRelInfo saveCrmcRecCarRelInfo(@RequestBody Map<String, String> map) {
-		String csmrMgmtNo = map.get("csmrMgmtNo");
-		String carNm = map.get("carNm");
-		String CrmVehlCd = map.get("CrmVehlCd");
-		String recDesc = map.get("recDesc");
+	public CrmcRecCarRelInfo saveCrmcRecCarRelInfo(@RequestBody Map<String, Object> map) {
+		Long csmrMgmtNo = (Long) map.get("csmrMgmtNo");
+		String carNm = (String) map.get("carNm");
+		String CrmVehlCd = (String) map.get("CrmVehlCd");
+		String recDesc = (String) map.get("recDesc");
 
 		CrmcRecCarRelInfo vo = new CrmcRecCarRelInfo();
 		vo.setCsmrMgmtNo(csmrMgmtNo);

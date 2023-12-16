@@ -44,7 +44,7 @@ public class CarService {
 	/**
 	 * 추천 차량 정보 조회 By csmrMgmtNo
 	 */
-	public CrmcRecCarRelInfo getCrmcRecCarRelInfo(String csmrMgmtNo) {
+	public CrmcRecCarRelInfo getCrmcRecCarRelInfo(Long csmrMgmtNo) {
 		return crmcRecCarRelInfoRepository.getCrmcRecCarRelInfoByCsmrMgmtNo(csmrMgmtNo);
 	}
 	
