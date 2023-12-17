@@ -13,6 +13,11 @@ public class MemoryCustomerRepository implements CustomerRepository{
     }
 
     @Override
+    public List<Customer> findByexrsEeEeno(String exrsEeEeno) {
+        return null;
+    }
+
+    @Override
     public Optional<Customer> findByCsmrMgmtNo(Long csmrMgmtNo) {
         return Optional.empty();
     }

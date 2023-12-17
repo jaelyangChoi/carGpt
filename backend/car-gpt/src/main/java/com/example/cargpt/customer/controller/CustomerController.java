@@ -22,17 +22,25 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    /** todo : json으로 던져주기
+    /**
      * 전체 고객 리스트 조회
      * @param
      * @return json
      */
     @GetMapping
     public List<Customer> customerList() {
-        log.debug("@GetMapping(\"/customers\")");
         List<Customer> customers = customerService.findCustomers();
-        log.debug("customers size : {}", customers.size());
+        return customers;
+    }
 
+    /**
+     * 전담 사원 번호에 헤당하는 고객 리스트 조회
+     * @param
+     * @return json
+     */
+    @GetMapping("/{eeNo}")
+    public List<Customer> CustomerListByEmployee(@PathVariable String eeNo) {
+        List<Customer> customers = customerService.findCustomersByEmployee(eeNo);
         return customers;
     }
 
@@ -41,12 +49,9 @@ public class CustomerController {
      * @param csmrMgmtNo
      * @return
      */
-    @GetMapping("/{csmrMgmtNo}")
+    @GetMapping("/info/{csmrMgmtNo}")
     public CustomerInfo customerInfo(@PathVariable Long csmrMgmtNo) {
-        log.debug("@GetMapping(\"/customers/{csmrMgmtNo}\")");
         CustomerInfo customer = customerService.findCustomerInfo(csmrMgmtNo).get();
-        log.debug("customer : {}", customer.toString());
-
         return customer;
     }
 

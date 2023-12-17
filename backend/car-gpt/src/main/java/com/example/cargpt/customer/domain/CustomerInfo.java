@@ -48,8 +48,6 @@ public class CustomerInfo {
     String carHldgCnt;                  /*차량보유대수*/
     @Column(name = "CAR_CHNG_PRD")
     String carChngPrd;                  /*차량교체주기(일)*/
-    @Column(name = "EXRS_EE_EENO")
-    String exrsEeEeno;                  /*전담사원번호*/
     @Column(name = "INP_EENO")
     String inpEeno;                     /*입력자사원번호*/
     @Column(name = "INP_DTM")

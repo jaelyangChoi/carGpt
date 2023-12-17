@@ -7,5 +7,6 @@ import java.util.Optional;
 
 public interface CustomerRepository {
     List<Customer> findAll();
+    List<Customer> findByexrsEeEeno(String exrsEeEeno);
     Optional<Customer> findByCsmrMgmtNo(Long csmrMgmtNo);
 }

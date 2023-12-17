@@ -30,6 +30,15 @@ public class CustomerService {
     }
 
     /**
+     * 전담 사원의 고객 리스트 조회
+     *
+     * @return
+     */
+    public List<Customer> findCustomersByEmployee(String eeNo) {
+        return customerRepository.findByexrsEeEeno(eeNo);
+    }
+
+    /**
      * 고객관리번호로 고객 조회
      *
      * @return
@@ -42,7 +51,7 @@ public class CustomerService {
     }
 
     /**
-     * 고객 정보 조회
+     * 고객 상세 정보 조회
      *
      * @param csmrMgmtNo
      * @return
@@ -84,7 +93,7 @@ public class CustomerService {
         customerInfoVO.setEmail(customerDetailInfo.getEmlAdr());
         customerInfoVO.setTel(customerDetailInfo.getTelNum());
         customerInfoVO.setSex(customerDetailInfo.getSexCd());
-        customerInfoVO.setEmployeeNo(customerDetailInfo.getChgrEeno());
+        customerInfoVO.setEmployeeNo(customer.getExrsEeEeno());
         return customerInfoVO;
     }
 }
