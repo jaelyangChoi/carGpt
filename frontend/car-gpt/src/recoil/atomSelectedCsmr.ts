@@ -9,3 +9,8 @@ export const atomSelectedCsmr = atom<string>({
   key: "SelectedCsmr",
   default: undefined,
 });
+
+export const atomSelectedCsmrNm = atom<string>({
+  key: "SelectedCsmrNm",
+  default: undefined,
+});

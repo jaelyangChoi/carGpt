@@ -18,4 +18,4 @@ export const atomLoginId = atom<string>({
   key: "loginId",
   default: "E178622",
   effects_UNSTABLE: [persistAtom],
-})
+});
