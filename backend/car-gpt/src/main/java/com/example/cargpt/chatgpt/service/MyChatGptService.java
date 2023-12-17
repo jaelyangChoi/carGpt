@@ -107,13 +107,7 @@ public class MyChatGptService {
 		for (int i = 0; i < firstParsedAnswer.length; i++)
 			log.info("Chat GPT Answer that parsed[" + i + "] : " + firstParsedAnswer[i]);
 
-		String car = "";
-		// ChatGTP 답변 형태가 추천차종 다음 콤마가 있거나 없거나
-		if (firstParsedAnswer[1].contains(","))	
-			car = firstParsedAnswer[1].split(",")[0];
-		else
-			car = firstParsedAnswer[1].split("\n")[0];
-
+		String car = firstParsedAnswer[1].split(",")[0];
 		String reason = firstParsedAnswer[2];
 
 		String[] parsedResult = new String[2];
