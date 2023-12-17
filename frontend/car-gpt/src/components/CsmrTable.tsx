@@ -18,7 +18,7 @@ import Paper from "@mui/material/Paper";
 import { useSetRecoilState } from "recoil";
 import { atomIsCsmrModal } from "recoil/atomIsCsmrModal";
 import { atomIsMailModal } from "recoil/atomIsMailModal";
-import { atomSelectedCsmr } from "recoil/atomSelectedCsmr";
+import { atomSelectedCsmr, atomSelectedCsmrNm } from "recoil/atomSelectedCsmr";
 import CsmrDetailInfoType from "types/CsmrDetailInfoType";
 import { Chip, IconButton } from "@mui/material";
 import dummyCsmrDetailInfoList from "api/dummyCsmrDetailInfo";
@@ -28,9 +28,10 @@ import { Mail } from "@mui/icons-material";
 
 interface CsmrTableProps {
   csmrInfoList: CsrmrInfoType[];
-} 
+}
 const CsmrTable = ({ csmrInfoList }: CsmrTableProps) => {
   const setSelectedCsmr = useSetRecoilState(atomSelectedCsmr);
+  const setSelectedCsmrNm = useSetRecoilState(atomSelectedCsmrNm);
   const setIsCsmrModal = useSetRecoilState(atomIsCsmrModal);
   const setIsMailModal = useSetRecoilState(atomIsMailModal);
 
@@ -47,6 +48,7 @@ const CsmrTable = ({ csmrInfoList }: CsmrTableProps) => {
   const init = useEffect(() => {
     console.log(csmrInfoList);
   }, []);
+
   return (
     <TableContainer>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="simple table">
@@ -79,14 +81,14 @@ const CsmrTable = ({ csmrInfoList }: CsmrTableProps) => {
                 onClick={() => {
                   setIsCsmrModal(true);
                   setSelectedCsmr(csmrInfo.csmrMgmtNo);
-  
+                  setSelectedCsmrNm(csmrInfo.csmrNm);
                   console.log("로우클릭");
                 }}
               >
                 <TableCell align="center">{csmrInfo.csmrMgmtNo}</TableCell>
                 <TableCell align="center">{csmrInfo.csmrNm}</TableCell>
                 <TableCell align="center">
-                  {csmrInfo.smsRcpm === "Y" ? (
+                  {csmrInfo.smsRcpmYn === "Y" ? (
                     <Chip
                       label="수신 동의"
                       size="small"
@@ -103,7 +105,7 @@ const CsmrTable = ({ csmrInfoList }: CsmrTableProps) => {
                   )}
                 </TableCell>
                 <TableCell align="center">
-                  {csmrInfo.emlRcpm === "Y" ? (
+                  {csmrInfo.emlRcpmYN === "Y" ? (
                     <Chip
                       label="수신 동의"
                       size="small"
@@ -120,7 +122,7 @@ const CsmrTable = ({ csmrInfoList }: CsmrTableProps) => {
                   )}
                 </TableCell>
                 <TableCell align="center">
-                  {csmrInfo.tlmRcpm === "Y" ? (
+                  {csmrInfo.tlmRcpmYN === "Y" ? (
                     <Chip
                       label="수신 동의"
                       size="small"
@@ -136,7 +138,12 @@ const CsmrTable = ({ csmrInfoList }: CsmrTableProps) => {
                     />
                   )}
                 </TableCell>
-                <TableCell align="center">{csmrInfo.inpDtm.substring(0,10) > csmrInfo.altrDtm.substring(0,10) ? csmrInfo.inpDtm.substring(0,10) : csmrInfo.altrDtm.substring(0,10)}</TableCell>
+                <TableCell align="center">
+                  {csmrInfo.inpDtm.substring(0, 10) >
+                  csmrInfo.altrDtm.substring(0, 10)
+                    ? csmrInfo.inpDtm.substring(0, 10)
+                    : csmrInfo.altrDtm.substring(0, 10)}
+                </TableCell>
                 <TableCell align="center">
                   <IconButton
                     aria-label="mail"
@@ -144,6 +151,7 @@ const CsmrTable = ({ csmrInfoList }: CsmrTableProps) => {
                       event.stopPropagation(); // 현재 발생한 이벤트 이후의 이벤트 막기
                       setIsMailModal(true);
                       setSelectedCsmr(csmrInfo.csmrMgmtNo);
+                      setSelectedCsmrNm(csmrInfo.csmrNm);
                       console.log("메일클릭");
                     }}
                   >
@@ -151,7 +159,7 @@ const CsmrTable = ({ csmrInfoList }: CsmrTableProps) => {
                   </IconButton>
                 </TableCell>
               </TableRow>
-            )
+            );
           })}
         </TableBody>
       </Table>

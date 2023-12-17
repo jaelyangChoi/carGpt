@@ -35,12 +35,13 @@ export default function CsmrModal() {
 
   const [csmrDetailInfo, setCsmrDetailInfo] = useState<CsmrDetailInfoType>();
 
+  // 회원상세정보 API
   async function getCustomer() {
     // const data = dummyCsmrDetailInfoList();
     // console.log(data);
     // setCsmrDetailInfo(data[0]);
 
-    const response = await http.get(`/customers/${csmrMgmtNo}`);
+    const response = await http.get(`/customers/info/${csmrMgmtNo}`);
     console.log("회원상세정보 받아오기");
     console.log(response.data);
     setCsmrDetailInfo(response.data);

@@ -23,21 +23,24 @@ function HomeRouter() {
   ];
 
   return (
-    <Stack direction="row">
-      <SideBar />
-      <Stack sx={{ width: "100%", p: 4 }}>
-        <Typography sx={{ mb: 4 }} variant="h4">
-          {
-            titleInfoList.find((titleInfo) => titleInfo.pathname === pathname)!
-              .title
-          }
-        </Typography>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/setting" element={<Setting />} />
-        </Routes>
+    <>
+      <Stack direction="row">
+        <SideBar />
+        <Stack sx={{ width: "100%", p: 4 }}>
+          <Typography sx={{ mb: 4 }} variant="h4">
+            {
+              titleInfoList.find(
+                (titleInfo) => titleInfo.pathname === pathname
+              )!.title
+            }
+          </Typography>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/setting" element={<Setting />} />
+          </Routes>
+        </Stack>
       </Stack>
-    </Stack>
+    </>
   );
 }
 

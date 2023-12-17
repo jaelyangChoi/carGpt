@@ -11,18 +11,25 @@ import {
   ListItemIcon,
   ListItemText,
   ListItem,
+  Avatar,
+  Grid,
+  ListItemAvatar,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import MailIcon from "@mui/icons-material/Mail";
+import PersonIcon from "@mui/icons-material/Person";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
 import SettingsIcon from "@mui/icons-material/Settings";
 import logoText from "assets/logo_text.png";
 import { useNavigate } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
-import { atomIsLogin } from "recoil/atomIsLogin";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { atomIsLogin, atomLoginId } from "recoil/atomIsLogin";
+import { Image } from "@mui/icons-material";
 
 export default function SideBar() {
   const setIsLogin = useSetRecoilState(atomIsLogin);
+  const loginId = useRecoilValue(atomLoginId);
   const navigate = useNavigate();
   const drawerWidth = 240;
 
@@ -32,11 +39,11 @@ export default function SideBar() {
       icon: <MenuIcon />,
       onClick: () => navigate("/"),
     },
-    {
-      title: "설정",
-      icon: <SettingsIcon />,
-      onClick: () => navigate("/setting"),
-    },
+    // {
+    //   title: "설정",
+    //   icon: <SettingsIcon />,
+    //   onClick: () => navigate("/setting"),
+    // },
     {
       title: "로그아웃",
       icon: <LogoutIcon />,
@@ -65,6 +72,15 @@ export default function SideBar() {
       <Divider />
       {/* 드로어 리스트 */}
       <List>
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar>
+              <PersonIcon sx={{ fontSize: 30 }} />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText primary={loginId} secondary="카마스터" />
+        </ListItem>
+        {/* <Divider /> */}
         {sideBarItems.map((sideBarItem, index) => (
           <ListItem key={sideBarItem.title} disablePadding>
             <ListItemButton onClick={sideBarItem.onClick}>
