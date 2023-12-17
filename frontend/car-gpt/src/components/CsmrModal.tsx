@@ -47,7 +47,7 @@ export default function CsmrModal() {
   }
 
   useEffect(() => {
-    // csmrMgmtNo가 undefined가 아닌 경우에만 고객상세정보 받아고기
+    // csmrMgmtNo가 undefined가 아닌 경우에만 고객상세정보 받아오기
     if (csmrMgmtNo) {
       getCustomer();
       console.log(csmrMgmtNo);
@@ -114,9 +114,9 @@ export default function CsmrModal() {
               </Grid>
               <Grid item xs={12}>
                 <Typography gutterBottom variant="body1">
-                  {csmrDetailInfo?.csmrTymdNo.substring(0,4)}.
-                  {csmrDetailInfo?.csmrTymdNo.substring(4,6)}.
-                  {csmrDetailInfo?.csmrTymdNo.substring(6,8)}
+                  {csmrDetailInfo?.csmrTymdNo.substring(0, 4)}.
+                  {csmrDetailInfo?.csmrTymdNo.substring(4, 6)}.
+                  {csmrDetailInfo?.csmrTymdNo.substring(6, 8)}
                 </Typography>
               </Grid>
               <Divider variant="middle" />

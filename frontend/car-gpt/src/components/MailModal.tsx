@@ -27,11 +27,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { atomIsMailModal } from "recoil/atomIsMailModal";
 import { atomSelectedCsmr } from "recoil/atomSelectedCsmr";
 import CarInfoType from "types/CarInfoType";
-import Carousel from "react-material-ui-carousel";
-import {
-  ArrowBackIosRounded,
-  ArrowForwardIosRounded,
-} from "@mui/icons-material";
+import { http } from "api/http";
 
 export default function MailModal() {
   const csmrMgmtNo = useRecoilValue(atomSelectedCsmr);
@@ -40,10 +36,26 @@ export default function MailModal() {
   const [carInfoList, setCarInfoList] = useState<CarInfoType[]>([]);
 
   async function getCars() {
-    const data = dummyCarInfoList();
-    setCarInfoList(data);
-    console.log(data);
+    const response = await http.get(`/crmcRecCarRelInfo/${csmrMgmtNo}`);
+    console.log("회원의 추천차량정보 받아오기");
+    console.log(response.data);
   }
+
+  // chatGPT한테 추천받기 API 연동
+  // async function getRecoCar() {
+  //   const response = await http.post(`/question`, null, {
+  //     params: {
+  //       csmrMgmtNo: "1",
+  //       rdnmAdr: "asdfasdf",
+  //       sexCd: "1",
+  //       csmrTymdNo: "19840527",
+  //       mariYn: "1",
+  //       csmrChtSpsn: "2",
+  //     },
+  //   });
+  //   console.log("추천차량정보 받아오기");
+  //   console.log(response.data);
+  // }
 
   useEffect(() => {
     csmrMgmtNo && getCars();
@@ -57,90 +69,60 @@ export default function MailModal() {
       maxWidth="md"
     >
       <DialogContent>
-        <Carousel
-          navButtonsProps={{
-            style: {
-              color: "#00287A",
-              backgroundColor: "#ffffff",
-            },
-          }}
-          NextIcon={<ArrowForwardIosRounded />}
-          PrevIcon={<ArrowBackIosRounded />}
-          sx={{ pl: 10, pr: 10 }}
-          //   cycleNavigation={false}
-          navButtonsAlwaysVisible={true}
-          autoPlay={false}
-          indicators={false}
-        >
-          {carInfoList.map((carInfo, index) => (
-            <>
-              <Grid container spacing={2}>
-                <Grid item xs={12} sx={{ mb: 2 }}>
-                  <Typography
-                    variant="subtitle1"
-                    // sx={{ display: "flex", justifyContent: "center" }}
-                  >
-                    추천 차량 {index + 1}.
-                  </Typography>
-                  <Typography
-                    variant="h4"
-                    // sx={{ display: "flex", justifyContent: "center" }}
-                  >
-                    {carInfo.carNm}
-                  </Typography>
-                </Grid>
-                <Grid item xs={6} sx={{ textAlign: "center" }}>
-                  <img src={carImg} width="100%" alt="carImage" />
-                </Grid>
-                <Grid item xs={6} sx={{ p: 3 }}>
-                  <Grid
-                    container
-                    spacing={2.5}
-                    // sx={{
-                    //   textAlign: "center",
-                    //   alignItems: "center",
-                    //   justifyItems: "center",
-                    // }}
-                  >
-                    <ListItem>asleiflj</ListItem>
-                    <ListItemText>sleifja</ListItemText>
-                    <Grid item xs={5}>
-                      차종아이디
-                    </Grid>
-                    <Grid item xs={7}>
-                      {carInfo.carId}
-                    </Grid>
-                    <Divider />
-                    <Grid item xs={5}>
-                      차종대표코드
-                    </Grid>
-                    <Grid item xs={7}>
-                      {carInfo.crmVehlCd}
-                    </Grid>
-                    <Grid item xs={5}>
-                      연료
-                    </Grid>
-                    <Grid item xs={7}>
-                      {carInfo.fuel}
-                    </Grid>
-                    <Grid item xs={5}>
-                      연비
-                    </Grid>
-                    <Grid item xs={7}>
-                      {carInfo.fuelEffic}
-                    </Grid>
-                    <Grid item xs={5}>
-                      추천이유
-                    </Grid>
-                    <Grid item xs={7}>
-                      {carInfo.reason}
-                    </Grid>
-                  </Grid>
-                </Grid>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sx={{ mb: 2 }}>
+            <Typography
+              variant="subtitle1"
+              // sx={{ display: "flex", justifyContent: "center" }}
+            >
+              추천 차량.
+            </Typography>
+            <Typography
+              variant="h4"
+              // sx={{ display: "flex", justifyContent: "center" }}
+            >
+              차량이름
+            </Typography>
+          </Grid>
+          <Grid item xs={6} sx={{ textAlign: "center" }}>
+            <img src={carImg} width="100%" alt="carImage" />
+          </Grid>
+          <Grid item xs={6} sx={{ p: 3 }}>
+            <Grid container spacing={2.5}>
+              <Grid item xs={5}>
+                차종아이디
               </Grid>
-            </>
-          ))}
-        </Carousel>
+              <Grid item xs={7}>
+                차종아이디
+              </Grid>
+              <Divider />
+              <Grid item xs={5}>
+                차종대표코드
+              </Grid>
+              <Grid item xs={7}>
+                차종대표코드
+              </Grid>
+              <Grid item xs={5}>
+                연료
+              </Grid>
+              <Grid item xs={7}>
+                연료
+              </Grid>
+              <Grid item xs={5}>
+                연비
+              </Grid>
+              <Grid item xs={7}>
+                연비
+              </Grid>
+              <Grid item xs={5}>
+                추천이유
+              </Grid>
+              <Grid item xs={7}>
+                추천이유
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
       </DialogContent>
       <DialogActions
         disableSpacing
