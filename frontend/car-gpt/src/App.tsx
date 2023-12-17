@@ -1,8 +1,7 @@
-import React from "react";
-import "./App.css";
-import Router from "./Router";
+import Router from "./router/Router";
 
 import { createTheme, ThemeProvider } from "@mui/material";
+import { RecoilRoot } from "recoil";
 
 const theme = createTheme({
   typography: {
@@ -20,9 +19,11 @@ const theme = createTheme({
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <Router />
-    </ThemeProvider>
+    <RecoilRoot>
+      <ThemeProvider theme={theme}>
+        <Router />
+      </ThemeProvider>
+    </RecoilRoot>
   );
 }
 
